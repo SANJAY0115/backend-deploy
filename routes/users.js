@@ -1,70 +1,70 @@
-import express from "express";
-import bcrypt from "bcrypt";
-import { ObjectId } from "../db.js";
-import { addUsers, deleteUsers, generateToken, getAllUsers, getUsers ,  } from "../controllers/users.js";
+// import express from "express";
+// import bcrypt from "bcrypt";
+// import { ObjectId } from "../db.js";
+// import { addUsers, deleteUsers, generateToken, getAllUsers, getUsers ,  } from "../controllers/users.js";
 
-const router = express.Router();
-// ============================= Sign Up - encrypt =============================================
+// const router = express.Router();
+// // ============================= Sign Up - encrypt =============================================
 
-// send username , password via post req
-router.post("/signup", async (req, res) => {
-  try {
-    // const userDetails = await req.body;
-    const users = await getUsers(req.body.email);
-    if (!users) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(req.body.password, salt);
-      const hashedUser = await { ...req.body, password: hashedPassword };
-      // const result = await addUsers(hashedUser);
-      await addUsers(hashedUser);
-      res.status(200).json({ message: "Sucessfully signed up" });
-      return
-    }
-    res.status(400).json({ message: "Given email already exists" });
-  } catch (error) {
-    console.log("Error Occured", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+// // send username , password via post req
+// router.post("/signup", async (req, res) => {
+//   try {
+//     // const userDetails = await req.body;
+//     const users = await getUsers(req.body.email);
+//     if (!users) {
+//       const salt = await bcrypt.genSalt(10);
+//       const hashedPassword = await bcrypt.hash(req.body.password, salt);
+//       const hashedUser = await { ...req.body, password: hashedPassword };
+//       // const result = await addUsers(hashedUser);
+//       await addUsers(hashedUser);
+//       res.status(200).json({ message: "Sucessfully signed up" });
+//       return
+//     }
+//     res.status(400).json({ message: "Given email already exists" });
+//   } catch (error) {
+//     console.log("Error Occured", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
 
-router.get("/", async(req, res)=>{
-  try {
-    const result = await getAllUsers();
-    res.status(200).json({ data: result })
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+// router.get("/", async(req, res)=>{
+//   try {
+//     const result = await getAllUsers();
+//     res.status(200).json({ data: result })
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
 
-// ============================= Sign In / login - decrypt =============================================
+// // ============================= Sign In / login - decrypt =============================================
 
-router.post("/login",async(req,res)=>{
-  try {
-    // check whether user email is availale or not for signin
-    const user = await getUsers(req.body.email)
-    if(!user){
-      res.status(400).json({message:"Invalid Email"})
-      return
-    }
-    // decrypt the password and compare
-    const validatePassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    )
-    // console.log(validatePassword)
-    if(!validatePassword){
-      res.status(400).json({message:"Invalid Password"})
-      return
-    }
-    const token = generateToken(user._id);
-    res.status(200).json({message:"Sucessfully logged in",token})
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-})
-//=========================================================================================
+// router.post("/login",async(req,res)=>{
+//   try {
+//     // check whether user email is availale or not for signin
+//     const user = await getUsers(req.body.email)
+//     if(!user){
+//       res.status(400).json({message:"Invalid Email"})
+//       return
+//     }
+//     // decrypt the password and compare
+//     const validatePassword = await bcrypt.compare(
+//       req.body.password,
+//       user.password
+//     )
+//     // console.log(validatePassword)
+//     if(!validatePassword){
+//       res.status(400).json({message:"Invalid Password"})
+//       return
+//     }
+//     const token = generateToken(user._id);
+//     res.status(200).json({message:"Sucessfully logged in",token})
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// })
+// //=========================================================================================
 
 
 
