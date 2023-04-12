@@ -19,15 +19,15 @@ app.use("/users",userRouter)
 
 // deploy pana url oda home age la endha cotent ium ilama , backend-deploy-delta.vercel.app
 //cant get nu varudhu , adhuku oru get req , home page route
-const router = express.Router();
-// Check server or default api (get) - backend-deploy-delta.vercel.app
-router.get("/", (req, res) => {
-    try {
-      res.send(`Server Active`)
-    } catch (error) {
-      console.log(error)
-    }
-  });
+// const router = express.Router();
+// // Check server or default api (get) - backend-deploy-delta.vercel.app
+// router.get("/", (req, res) => {
+//     try {
+//       res.json(`Server Active`)
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   });
 
 
 
