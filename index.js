@@ -17,7 +17,24 @@ app.use("/students",studentsRouter)
 app.use("/users",userRouter)
 // default url: users , router url : signup
 
-// export var ObjectId = obj.ObjectId      // object id for put and post in student.js
+// deploy pana url oda home age la endha cotent ium ilama , backend-deploy-delta.vercel.app
+//cant get nu varudhu , adhuku oru get req , home page route
+const router = express.Router();
+// Check server or default api (get) - backend-deploy-delta.vercel.app
+router.get("/", (req, res) => {
+    try {
+      res.send(`Server Active`)
+    } catch (error) {
+      console.log(error)
+    }
+  });
+
+
 
 // http server initialization
 app.listen(PORT,()=>console.log(`server started localhost:${PORT}`))
+
+
+
+
+// export var ObjectId = obj.ObjectId      // object id for put and post in student.js
